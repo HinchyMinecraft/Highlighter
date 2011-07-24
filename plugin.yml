@@ -1,0 +1,9 @@
+name: Highlighter
+main: me.iffa.highlighter.Highlighter
+version: 0.2
+softdepend: [BukkitContrib]
+commands:
+    highlighter:
+        description: Adds a new highlight
+        usage: /<command>
+        permissions: highlighter.commands
