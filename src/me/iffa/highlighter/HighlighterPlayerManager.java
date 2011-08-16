@@ -1,3 +1,4 @@
+// Package Declaration
 package me.iffa.highlighter;
 
 // Java Imports

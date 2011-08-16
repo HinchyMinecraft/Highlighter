@@ -1,9 +1,10 @@
+// Package Declaration
 package me.iffa.highlighter;
 
-// Bukkit Imports
-
+// Java Imports
 import java.util.List;
 
+// Bukkit Imports
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

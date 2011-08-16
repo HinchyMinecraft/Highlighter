@@ -1,3 +1,4 @@
+// Package Declaration
 package me.iffa.highlighter;
 
 // Java Imports
@@ -13,6 +14,7 @@ import org.bukkit.util.config.Configuration;
 /**
  * Configuration file handler class.
  * 
+ * @author Pandarr
  * @author iffa
  * 
  */
@@ -28,8 +30,6 @@ public class HighlighterConfig {
 
 	/**
 	 * Loads the configuration file
-	 * 
-	 * @author Pandarr
 	 */
 	public static void loadConfig() {
 		File configFile = new File(Bukkit.getServer().getPluginManager()
