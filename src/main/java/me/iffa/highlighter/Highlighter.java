@@ -20,7 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Highlighter extends JavaPlugin {
 	// Variables
 	public static String prefix = "[Highlighter]";
-	public static String version = "0.3";
+	public static String version = "0.4";
 	public static Logger log;
 	private HighlighterCommands cmdExec = null;
 	public HighlighterPlayerManager plrmgr = new HighlighterPlayerManager(this);
