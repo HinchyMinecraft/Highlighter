@@ -60,20 +60,20 @@ public class HighlighterCommands implements CommandExecutor {
 					String[] array = highlights.toArray(new String[highlights
 							.size()]);
 					for (String string : array) {
-						player.sendMessage(ChatColor.DARK_GREEN + "-" + string);
+						player.sendMessage(ChatColor.DARK_GREEN + "-" + string.toLowerCase());
 					}
 					return true;
 
 				} else if (args.length == 2 && args[0].equalsIgnoreCase("add")) {
 					if (plrmgr.getConfig().getStringList(
-							player.getName()).contains(args[1])) {
+							player.getName()).contains(args[1].toLowerCase())) {
 						player.sendMessage(ChatColor.RED + Highlighter.prefix
 								+ " The highlight already exists!");
 						return true;
 					}
 					List<String> newList = plrmgr.getConfig()
 							.getStringList(player.getName());
-					newList.add(args[1]);
+					newList.add(args[1].toLowerCase());
 					plrmgr.getConfig().set(
 							player.getName(), newList);
 					plrmgr.saveConfig();
@@ -85,14 +85,14 @@ public class HighlighterCommands implements CommandExecutor {
 				} else if (args.length == 2
 						&& args[0].equalsIgnoreCase("remove")) {
 					if (!plrmgr.getConfig().getStringList(
-							player.getName()).contains(args[1])) {
+							player.getName()).contains(args[1].toLowerCase())) {
 						sender.sendMessage(ChatColor.RED + Highlighter.prefix
 								+ " The highlight doesn't exist!");
 						return true;
 					}
 					List<String> newList = plrmgr.getConfig()
 							.getStringList(player.getName());
-					newList.remove(args[1]);
+					newList.remove(args[1].toLowerCase());
 					plrmgr.getConfig().set(
 							player.getName(), newList);
 					plrmgr.saveConfig();

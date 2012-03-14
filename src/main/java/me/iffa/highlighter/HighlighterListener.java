@@ -46,7 +46,7 @@ public class HighlighterListener implements Listener {
 			List<String> highlights = HighlighterPlayerManager.getConfig().getStringList(player.getName());
 			String[] array = highlights.toArray(new String[highlights.size()]);
 			for (String string : array) {
-				if (event.getMessage().contains(string)) {
+				if (event.getMessage().contains(string.toLowerCase())) {
 					soundManager.playCustomSoundEffect(null, sPlayer, plugin.getConfig().getString("highlight.soundurl"), true);
 					if (plugin.getConfig().getBoolean("highlight.playvoice", true)) {
 						soundManager.playCustomSoundEffect(plugin, sPlayer, "http://saxxyspin.com/highlighter_voice.wav", true);
@@ -67,7 +67,7 @@ public class HighlighterListener implements Listener {
 		// Add default highlight if the highlight is not found for the player.
 		if (!HighlighterPlayerManager.getConfig().isSet(event.getPlayer().getName())) {
 			List<String> newEntry = new ArrayList<String>();
-			newEntry.add(event.getPlayer().getName());
+			newEntry.add(event.getPlayer().getName().toLowerCase());
 			HighlighterPlayerManager.getConfig().set(event.getPlayer()
 					.getName(), newEntry);
 			HighlighterPlayerManager.saveConfig();
