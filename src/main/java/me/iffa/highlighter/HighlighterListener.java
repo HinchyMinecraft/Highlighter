@@ -9,7 +9,8 @@ import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 // Spout Imports
 import org.getspout.spoutapi.SpoutManager;
@@ -22,7 +23,7 @@ import org.getspout.spoutapi.sound.SoundManager;
  * @author iffa
  * 
  */
-public class HighlighterListener extends PlayerListener {
+public class HighlighterListener implements Listener {
 	// Variables
 	private Highlighter plugin;
 
@@ -37,23 +38,18 @@ public class HighlighterListener extends PlayerListener {
 	 * @param event
 	 *            Event data
 	 */
+	@EventHandler
 	public void onPlayerChat(PlayerChatEvent event) {
 		SoundManager soundManager = SpoutManager.getSoundManager();
 		for (Player player : event.getRecipients()) {
 			SpoutPlayer sPlayer = (SpoutPlayer) player;
-			List<String> highlights = HighlighterPlayerManager.myConfig
-					.getStringList(player.getName(), null);
+			List<String> highlights = HighlighterPlayerManager.getConfig().getStringList(player.getName());
 			String[] array = highlights.toArray(new String[highlights.size()]);
 			for (String string : array) {
 				if (event.getMessage().contains(string)) {
-					soundManager.playCustomSoundEffect(null, sPlayer,
-							HighlighterConfig.myConfig
-									.getString("highlight.soundurl"), true);
-					if (HighlighterConfig.myConfig.getBoolean(
-							"highlight.playvoice", true)) {
-						soundManager.playCustomSoundEffect(plugin, sPlayer,
-								"http://saxxyspin.com/highlighter_voice.wav",
-								true);
+					soundManager.playCustomSoundEffect(null, sPlayer, plugin.getConfig().getString("highlight.soundurl"), true);
+					if (plugin.getConfig().getBoolean("highlight.playvoice", true)) {
+						soundManager.playCustomSoundEffect(plugin, sPlayer, "http://saxxyspin.com/highlighter_voice.wav", true);
 					}
 				}
 			}
@@ -66,15 +62,15 @@ public class HighlighterListener extends PlayerListener {
 	 * @param event
 	 *            Event data
 	 */
+	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		// Add default highlight if the highlight is not found for the player.
-		if (HighlighterPlayerManager.myConfig.getProperty(event.getPlayer()
-				.getName()) == null) {
+		if (!HighlighterPlayerManager.getConfig().isSet(event.getPlayer().getName())) {
 			List<String> newEntry = new ArrayList<String>();
 			newEntry.add(event.getPlayer().getName());
-			HighlighterPlayerManager.myConfig.setProperty(event.getPlayer()
+			HighlighterPlayerManager.getConfig().set(event.getPlayer()
 					.getName(), newEntry);
-			HighlighterPlayerManager.myConfig.save();
+			HighlighterPlayerManager.saveConfig();
 		}
 	}
 }

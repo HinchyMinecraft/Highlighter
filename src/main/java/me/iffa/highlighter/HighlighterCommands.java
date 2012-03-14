@@ -19,6 +19,13 @@ import org.bukkit.entity.Player;
  * 
  */
 public class HighlighterCommands implements CommandExecutor {
+
+	private HighlighterPlayerManager plrmgr;
+
+    public HighlighterCommands(HighlighterPlayerManager man) {
+        plrmgr = man;
+    }
+
 	/**
 	 * Called when the 'highlighter'-command is used.
 	 */
@@ -40,16 +47,16 @@ public class HighlighterCommands implements CommandExecutor {
 					return true;
 
 				} else if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
-					if (HighlighterPlayerManager.myConfig.getStringList(
-							player.getName(), null).isEmpty()) {
+					if (plrmgr.getConfig().getStringList(
+							player.getName()).isEmpty()) {
 						player.sendMessage(ChatColor.RED + Highlighter.prefix
 								+ " You have no highlights! (please make one!)");
 						return true;
 					}
 					player.sendMessage(ChatColor.GREEN + Highlighter.prefix
 							+ " Your highlights:");
-					List<String> highlights = HighlighterPlayerManager.myConfig
-							.getStringList(player.getName(), null);
+					List<String> highlights = plrmgr.getConfig()
+							.getStringList(player.getName());
 					String[] array = highlights.toArray(new String[highlights
 							.size()]);
 					for (String string : array) {
@@ -58,18 +65,18 @@ public class HighlighterCommands implements CommandExecutor {
 					return true;
 
 				} else if (args.length == 2 && args[0].equalsIgnoreCase("add")) {
-					if (HighlighterPlayerManager.myConfig.getStringList(
-							player.getName(), null).contains(args[1])) {
+					if (plrmgr.getConfig().getStringList(
+							player.getName()).contains(args[1])) {
 						player.sendMessage(ChatColor.RED + Highlighter.prefix
 								+ " The highlight already exists!");
 						return true;
 					}
-					List<String> newList = HighlighterPlayerManager.myConfig
-							.getStringList(player.getName(), null);
+					List<String> newList = plrmgr.getConfig()
+							.getStringList(player.getName());
 					newList.add(args[1]);
-					HighlighterPlayerManager.myConfig.setProperty(
+					plrmgr.getConfig().set(
 							player.getName(), newList);
-					HighlighterPlayerManager.myConfig.save();
+					plrmgr.saveConfig();
 					player.sendMessage(ChatColor.GREEN + Highlighter.prefix
 							+ " Added '" + args[1] + "' to highlights!");
 
@@ -77,18 +84,18 @@ public class HighlighterCommands implements CommandExecutor {
 
 				} else if (args.length == 2
 						&& args[0].equalsIgnoreCase("remove")) {
-					if (!HighlighterPlayerManager.myConfig.getStringList(
-							player.getName(), null).contains(args[1])) {
+					if (!plrmgr.getConfig().getStringList(
+							player.getName()).contains(args[1])) {
 						sender.sendMessage(ChatColor.RED + Highlighter.prefix
 								+ " The highlight doesn't exist!");
 						return true;
 					}
-					List<String> newList = HighlighterPlayerManager.myConfig
-							.getStringList(player.getName(), null);
+					List<String> newList = plrmgr.getConfig()
+							.getStringList(player.getName());
 					newList.remove(args[1]);
-					HighlighterPlayerManager.myConfig.setProperty(
+					plrmgr.getConfig().set(
 							player.getName(), newList);
-					HighlighterPlayerManager.myConfig.save();
+					plrmgr.saveConfig();
 					player.sendMessage(ChatColor.GREEN + Highlighter.prefix
 							+ " Removed '" + args[1] + "' from highlights!");
 
@@ -126,17 +133,17 @@ public class HighlighterCommands implements CommandExecutor {
 	 * @return true if the player has the permision node
 	 */
 	private boolean hasPermission(String name, Player player) {
-		if (Bukkit.getServer().getPluginManager().getPlugin("Permissions") != null) {
+		/*if (Bukkit.getServer().getPluginManager().getPlugin("Permissions") != null) {
 			if (Highlighter.permissionHandler.has(player, name)
 					|| player.isOp()) {
 				return true;
 			}
 			return false;
-		}
+		}*/
 		if (player.hasPermission(name) || player.isOp()) {
 			return true;
 		}
-		return true;
+		return false;
 	}
 
 }

@@ -1,6 +1,6 @@
 name: Highlighter
 main: me.iffa.highlighter.Highlighter
-version: 0.3
+version: 0.4
 depend: [Spout]
 commands:
     highlighter:
