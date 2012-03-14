@@ -48,9 +48,6 @@ public class HighlighterListener implements Listener {
 			for (String string : array) {
 				if (event.getMessage().toLowerCase().contains(string.toLowerCase())) {
 					soundManager.playCustomSoundEffect(null, sPlayer, plugin.getConfig().getString("highlight.soundurl"), true);
-					if (plugin.getConfig().getBoolean("highlight.playvoice", true)) {
-						soundManager.playCustomSoundEffect(plugin, sPlayer, "http://saxxyspin.com/highlighter_voice.wav", true);
-					}
 				}
 			}
 		}
